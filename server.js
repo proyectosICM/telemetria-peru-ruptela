@@ -14,7 +14,10 @@ server.on('connection', (conn) => {
             //return acknowledgement
             conn.write(res.ack);
         } else {
-            console.log('Res'+ res.data);
+            // Si no hubo error, hacer algo con los datos
+            console.log('Processed data:', res.data);
+            // Regresar el reconocimiento
+            conn.write(res.ack);
         }
     });
     conn.once('close', () => {
