@@ -16,8 +16,10 @@ server.on('connection', (conn) => {
         } else {
             // Si no hubo error, hacer algo con los datos
             console.log('Processed data:', res.data);
+            console.log('Processed data:', res);
+            console.log(res);
             // Regresar el reconocimiento
-            conn.write(res.ack);
+            //conn.write(res.ack);
         }
     });
     conn.once('close', () => {
