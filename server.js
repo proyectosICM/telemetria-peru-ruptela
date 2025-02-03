@@ -6,7 +6,7 @@ server.on('connection', (conn) => {
     console.log('New connection from %s', addr);
 
     conn.on('data', (data) => {
-        console.log('New data from connection %s: %j', addr, data);
+        //console.log('New data from connection %s: %j', addr, data);
         const res = process(data);
         if (!res.error) {
             //do something with res.data
@@ -14,7 +14,7 @@ server.on('connection', (conn) => {
             //return acknowledgement
             conn.write(res.ack);
         } else {
-            console.log('Res'+ res);
+            console.log('Res'+ res.data);
         }
     });
     conn.once('close', () => {
