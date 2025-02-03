@@ -14,7 +14,7 @@ server.on('connection', (conn) => {
             //return acknowledgement
             conn.write(res.ack);
         } else {
-            //do something with res.error
+            console.log('Res'+ res);
         }
     });
     conn.once('close', () => {
