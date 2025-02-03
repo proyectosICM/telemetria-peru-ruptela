@@ -15,6 +15,7 @@ server.on('connection', (conn) => {
             conn.write(res.ack);
         } else {
             conn.write(res.ack);
+            console.log('ack data:', res.ack);
             // Si no hubo error, hacer algo con los datos
             console.log('Processed data:', res.data);
             console.log('Processed data:', res);
