@@ -25,7 +25,7 @@ server.on('connection', (conn) => {
     });
 });
 //configure server to listen on PORT
-const port = 3000;
+const port = 9527;
 
 server.listen(port, () => {
     console.log('Server started on port %s at %s', server.address().port, server.address().address);
