@@ -5,6 +5,9 @@ server.on('connection', (conn) => {
     const addr = conn.remoteAddress + ':' + conn.remotePort;
     console.log('New connection from %s', addr);
 
+    const confirmationMessage = Buffer.from([0x01]);  // Mensaje de confirmación en formato binario
+    conn.write(confirmationMessage);
+
     conn.on('data', (data) => {
         console.log('New data from connection %s: %j', addr, data);
 
