@@ -10,18 +10,23 @@ server.on('connection', (conn) => {
 
     conn.on('data', (data) => {
         //console.log('New data from connection %s: %j', addr, data);
-        console.log('New data from connection %s: %j', addr, data.data);
-        // Calcula la longitud del paquete en bytes y bits
-        const packetSizeBytes = data.length;
-        const packetSizeBits = packetSizeBytes * 8;
-
         console.log(`Received packet size: ${packetSizeBytes} bytes (${packetSizeBits} bits)`);
 
 
-        const res = process(data);
+        // Recortar los dos primeros bytes
+        if (data.length < 2) {
+            console.log('Received data is too short to process.');
+            return;
+        }
+
+        const lengthBytes = data.slice(0, 2); // Los dos primeros bytes que representan la longitud
+        const actualData = data.slice(2);    // El resto del paquete después de los primeros dos bytes
+
+
+        const res = process(actualData);
         if (!res.error) {
             //do something with res.data
-        
+
             //return acknowledgement
             conn.write(res.ack);
         } else {
