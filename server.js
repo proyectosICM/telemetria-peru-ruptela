@@ -27,7 +27,7 @@ server.on('connection', (conn) => {
             //console.log('Processed data:', res);
             //console.log(res);
             // Regresar el reconocimiento
-            conn.write(res.ack);
+            //conn.write(res.ack);
         }
     });
     conn.once('close', () => {
