@@ -18,13 +18,13 @@ server.on('connection', (conn) => {
         const res = process(data);
         if (!res.error) {
             //do something with res.data
-            console.log('Processed data:', res.data);
+        
             //return acknowledgement
             conn.write(res.ack);
         } else {
             // Si no hubo error, hacer algo con los datos
             console.log('Processed data:', res.data);
-            console.log('Processed data:', res);
+            //console.log('Processed data:', res);
             console.log(res);
             // Regresar el reconocimiento
             conn.write(res.ack);
