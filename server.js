@@ -9,8 +9,8 @@ server.on('connection', (conn) => {
     conn.write(confirmationMessage);
 
     conn.on('data', (data) => {
-        console.log('New data from connection %s: %j', addr, data);
-
+        //console.log('New data from connection %s: %j', addr, data);
+        console.log('New data from connection %s: %j', addr, data.data);
         // Calcula la longitud del paquete en bytes y bits
         const packetSizeBytes = data.length;
         const packetSizeBits = packetSizeBytes * 8;
