@@ -7,6 +7,14 @@ server.on('connection', (conn) => {
 
     conn.on('data', (data) => {
         //console.log('New data from connection %s: %j', addr, data);
+
+        // Calcula la longitud del paquete en bytes y bits
+        const packetSizeBytes = data.length;
+        const packetSizeBits = packetSizeBytes * 8;
+
+        console.log(`Received packet size: ${packetSizeBytes} bytes (${packetSizeBits} bits)`);
+
+
         const res = process(data);
         if (!res.error) {
             //do something with res.data
@@ -14,14 +22,12 @@ server.on('connection', (conn) => {
             //return acknowledgement
             conn.write(res.ack);
         } else {
-            //conn.write(res.ack);
-            console.log('ack data:', res.ack);
             // Si no hubo error, hacer algo con los datos
             console.log('Processed data:', res.data);
             console.log('Processed data:', res);
             console.log(res);
             // Regresar el reconocimiento
-
+            conn.write(res.ack);
         }
     });
     conn.once('close', () => {
