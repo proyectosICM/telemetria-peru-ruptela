@@ -6,7 +6,7 @@ server.on('connection', (conn) => {
     console.log('New connection from %s', addr);
 
     conn.on('data', (data) => {
-        //console.log('New data from connection %s: %j', addr, data);
+        console.log('New data from connection %s: %j', addr, data);
 
         // Calcula la longitud del paquete en bytes y bits
         const packetSizeBytes = data.length;
@@ -25,7 +25,7 @@ server.on('connection', (conn) => {
             // Si no hubo error, hacer algo con los datos
             console.log('Processed data:', res.data);
             //console.log('Processed data:', res);
-            console.log(res);
+            //console.log(res);
             // Regresar el reconocimiento
             conn.write(res.ack);
         }
