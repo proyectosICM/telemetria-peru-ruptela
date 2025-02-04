@@ -26,9 +26,9 @@ server.on('connection', (conn) => {
         const res = process(actualData);
         if (!res.error) {
             //do something with res.data
-
+            console.log('Processed data:', res.data);
             //return acknowledgement
-            conn.write(res.ack);
+            //conn.write(res.ack);
         } else {
             // Si no hubo error, hacer algo con los datos
             console.log('Processed data:', res.data);
