@@ -26,7 +26,8 @@ server.on('connection', (conn) => {
         console.log('Error from connection %s: %s', addr, error.message);
     });
 });
+port = 9527; 
 //configure server to listen on PORT
-server.listen(PORT, () => {
+server.listen(port, () => {
     console.log('Server started on port %s at %s', server.address().port, server.address().address);
 });
