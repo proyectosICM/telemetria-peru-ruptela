@@ -7,6 +7,12 @@ server.on('connection', (conn) => {
 
     conn.on('data', (data) => {
         console.log('New data from connection %s: %j', addr, data);
+
+        // Verificar el tamaño de los datos recibidos (en bytes)
+        const byteLength = data.byteLength;
+        console.log('New data from connection %s: %j', addr, data);
+        console.log('Byte length of data:', byteLength);
+
         const res = process(data);
 
         console.log('Response to connection %s: %j', addr, res);
