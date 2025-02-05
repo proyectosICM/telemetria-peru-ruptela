@@ -14,10 +14,11 @@ server.on('connection', (conn) => {
 
 º
         // Recortar los dos primeros bytes
+        /*
         if (data.length < 2) {
             console.log('Received data is too short to process.');
             return;
-        }
+        }*/
 
         const lengthBytes = data.slice(0, 2); // Los dos primeros bytes que representan la longitud
         const actualData = data.slice(2);    // El resto del paquete después de los primeros dos bytes
