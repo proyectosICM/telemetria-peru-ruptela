@@ -23,7 +23,7 @@ server.on('connection', (conn) => {
         const actualData = data.slice(2);    // El resto del paquete después de los primeros dos bytes
 
 
-        const res = process(actualData);
+        const res = process(data);
         if (!res.error) {
             //do something with res.data
             console.log('Processed data:', res.data);
