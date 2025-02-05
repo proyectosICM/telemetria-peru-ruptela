@@ -7,17 +7,7 @@ server.on('connection', (conn) => {
 
     conn.on('data', (data) => {
         console.log('New data from connection %s: %j', addr, data);
-
-        // Convertir a Buffer
-        const buffer = Buffer.from(data);
-
-        // Convertir a hexadecimal
-        const hexData = buffer.toString('hex');
-        console.log('Hexadecimal data:', hexData);
-
-
-        const res = process(hexData);
-
+        const res = process(data);
 
         console.log('Response to connection %s: %j', addr, res);
         if (!res.error) {
