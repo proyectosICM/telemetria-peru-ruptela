@@ -10,7 +10,7 @@ server.on('connection', (conn) => {
 
     conn.on('data', (data) => {
         //console.log('New data from connection %s: %j', addr, data);
-        console.log(`Received packet size: ${packetSizeBytes} bytes (${packetSizeBits} bits)`);
+        //console.log(`Received packet size: ${packetSizeBytes} bytes (${packetSizeBits} bits)`);
 
 º
         // Recortar los dos primeros bytes
