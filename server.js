@@ -27,6 +27,7 @@ server.on('connection', (conn) => {
             conn.write(res.ack);
         } else {
             console.log('Procesado con errores');
+            console.log(res.error);
             //do something with res.error
         }
     });
