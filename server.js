@@ -12,7 +12,6 @@ server.on('connection', (conn) => {
         //console.log('New data from connection %s: %j', addr, data);
         //console.log(`Received packet size: ${packetSizeBytes} bytes (${packetSizeBits} bits)`);
 
-º
         // Recortar los dos primeros bytes
         /*
         if (data.length < 2) {
