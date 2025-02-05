@@ -7,8 +7,8 @@ server.on('connection', (conn) => {
 
     conn.on('data', (data) => {
         console.log('New data from connection %s: %j', addr, data);
-        console.log("Data ", data.type)
-        console.log("Data ", data.data)
+        console.log("Data ", data.type);
+        console.log("Data ", data.data);
         const res = process(data);
         console.log('Response to connection %s: %j', addr, res);
         if (!res.error) {
