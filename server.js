@@ -6,17 +6,13 @@ server.on('connection', (conn) => {
     console.log('New connection from %s', addr);
 
     conn.on('data', (data) => {
-        //console.log('New data from connection %s: %j', addr, data);
-
-        // Verificar el tamaño de los datos recibidos (en bytes)
-        const byteLength = data.byteLength;
-        console.log('Byte length of data:', byteLength);
-
+        console.log('New data from connection %s: %j', addr, data);
+        
         const res = process(data);
-
+        
         console.log('Response to connection %s: %j', addr, res);
         if (!res.error) {
-            //do something with res.data
+            //do something with res.dataº
             console.log('Procesado correctamente');
             //return acknowledgement
             conn.write(res.ack);
