@@ -1,7 +1,23 @@
 const net = require('net');
-const process = require('ruptela');
+const ruptelaParser = require('ruptela');   // renombrado para no sobrescribir process
+const mqtt = require('mqtt');
+
+// Configuración del broker MQTT
+const mqttOptions = {
+    host: "192.168.0.204",
+    port: 1883
+};
+const mqttClient = mqtt.connect(mqttOptions);
+
+mqttClient.on("connect", () => {
+    console.log("Conectado al broker MQTT en %s:%s", mqttOptions.host, mqttOptions.port);
+});
+mqttClient.on("error", (err) => {
+    console.error("Error en conexión MQTT:", err.message);
+});
 
 const server = net.createServer();
+
 server.on('connection', (conn) => {
     const addr = conn.remoteAddress + ':' + conn.remotePort;
     console.log('New connection from %s', addr);
@@ -11,29 +27,37 @@ server.on('connection', (conn) => {
     conn.on('data', (data) => {
         console.log('Data received from %s:', addr, data);
 
-        // Acumular los datos en el buffer
         buffer = Buffer.concat([buffer, data]);
 
-        while (buffer.length >= 4) {  // Necesitamos al menos 4 bytes para leer el tamaño del paquete
-            const packetLength = buffer.readUInt16BE(0);  // Leer el tamaño del paquete
-            const fullPacketSize = packetLength + 4;  // packetLength + 2 bytes del tamaño + 2 bytes del CRC16
+        while (buffer.length >= 4) {
+            const packetLength = buffer.readUInt16BE(0);
+            const fullPacketSize = packetLength + 4;
 
             if (buffer.length >= fullPacketSize) {
-                const packet = buffer.slice(0, fullPacketSize);  // Extraer el paquete completo
-                buffer = buffer.slice(fullPacketSize);  // Eliminar el paquete del buffer
+                const packet = buffer.slice(0, fullPacketSize);
+                buffer = buffer.slice(fullPacketSize);
 
                 // Procesar el paquete completo
-                const res = process(packet);
+                const res = ruptelaParser(packet);
                 console.log('Response to connection %s: %j', addr, res);
 
                 if (!res.error) {
                     console.log('Procesado correctamente');
-                    conn.write(res.ack);  // Enviar la confirmación
+                    conn.write(res.ack);
+
+                    // 👉 Enviar resultado al broker MQTT
+                    mqttClient.publish("prueba", JSON.stringify({
+                        client: addr,
+                        raw: packet.toString("hex"),   // datos crudos en hex
+                        parsed: res
+                    }), { qos: 1 }, (err) => {
+                        if (err) console.error("Error publicando en MQTT:", err.message);
+                    });
+
                 } else {
                     console.log('Procesado con errores:', res.error);
                 }
             } else {
-                // Si no tenemos suficientes datos para el paquete completo, esperar más datos
                 break;
             }
         }
