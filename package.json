@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "mqtt": "^5.14.0",
     "ruptela": "^1.0.2"
   }
 }
